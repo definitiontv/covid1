@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auto-app
+  labels:
+    app: auto-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auto-app
+  template:
+    metadata:
+      labels:
+        app: auto-app
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: build-output
+              mountPath: /usr/share/nginx/html
+        - name: builder
+          #image: johnbeck/reactrunner:v1
+          image: johnbeck/autoapp:v1
+          imagePullPolicy: Always
+          env:
+            - name: GITHUB_REPO
+              #value: "https://github.com/netlify-templates/one-click-hugo-cms.git"
+              value: "https://github.com/definitiontv/covid-19-spread-simulator.git"
+            - name: POLL_INTERVAL
+              value: "30"
+          volumeMounts:
+            - name: build-output
+              mountPath: /build
+      volumes:
+        - name: build-output
+          emptyDir: {}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: auto-app
+  labels:
+    app: auto-app
+spec:
+  selector:
+    app: auto-app
+  ports:
+    - port: 80
+      name: http
+      targetPort: 80
+  type: NodePort
