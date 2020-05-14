@@ -1,6 +1,8 @@
 FROM node
 
-COPY . .
+COPY init.sh .
+COPY build.sh .
+
 RUN chmod +x init.sh
 RUN chmod +x build.sh
 

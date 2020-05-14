@@ -5,7 +5,7 @@ metadata:
   labels:
     app: auto-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: auto-app
@@ -29,7 +29,7 @@ spec:
           env:
             - name: GITHUB_REPO
               #value: "https://github.com/netlify-templates/one-click-hugo-cms.git"
-              value: "https://github.com/definitiontv/covid-19-spread-simulator.git"
+              value: "http://git2.hubgoo.com/devadmin/covid1.git"
             - name: POLL_INTERVAL
               value: "30"
           volumeMounts:

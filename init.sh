@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$GITHUB_REPO" ]; then
-    echo "Please provide a Github repo URL"
+    echo "Please provide a repo URL"
     exit 1
 fi
 
@@ -10,6 +10,10 @@ if [ -z "$POLL_INTERVAL" ]; then
 fi
 
 CODE_DIR="code"
+
+
+echo "Removing git constructs"
+rm -r .git
 
 echo "Cloning repo '$GITHUB_REPO'"
 git clone $GITHUB_REPO $CODE_DIR
